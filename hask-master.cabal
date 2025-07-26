@@ -46,7 +46,8 @@ common warnings
 library
     import:           warnings
     exposed-modules:  
-        Task
+        Task,
+        Timer
 
     -- other-modules:
     -- other-extensions:

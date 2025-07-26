@@ -9,6 +9,7 @@ import Data.Text.IO (putStrLn)
 import System.IO (hFlush, stdout)
 import Task (Task (..))
 import Text.Read (readMaybe)
+import Timer (Timer (..))
 import Prelude hiding (putStrLn)
 
 countdown :: Int -> IO ()
@@ -27,7 +28,7 @@ newTask = do
     let timeQuestion = (text (T.pack "Please enter the estimated time to completion.") & bold) <> text (T.pack "\n")
     timeStr <- askUntil timeQuestion Nothing (pure . validateTimeEstimate)
     let timeInt = Data.Maybe.fromMaybe 0 (readMaybe (T.unpack timeStr))
-    pure $ Task{_taskName = name, _taskEstTime = timeInt}
+    pure $ Task{_name = name, _time = timeInt, _timer = Timer 0 0 0}
 
 validateName :: T.Text -> Either (Stylized T.Text) T.Text
 validateName input
@@ -44,5 +45,5 @@ main = do
     result <- runBylineT newTask
     case result of
         Just task -> do
-            countdown $ _taskEstTime task
+            countdown $ _time task
         _ -> pure ()
