@@ -1,7 +1,8 @@
 module Main where
 
 import Byline
-import Control.Concurrent (threadDelay)
+import Control.Concurrent (threadDelay, threadDelay, ThreadId)
+import Control.Concurrent.MVar (MVar)
 import Data.Function ((&))
 import qualified Data.Maybe
 import qualified Data.Text as T
@@ -11,6 +12,14 @@ import Task (Task (..))
 import Text.Read (readMaybe)
 import Timer (Timer (..))
 import Prelude hiding (putStrLn)
+import qualified Data.Map as Map
+
+data TimerState = Running | Paused
+
+data AppState = AppState
+    { _tasks :: [Task],
+      _taskMap :: Map.Map String (ThreadId, MVar TimerState)
+    }
 
 countdown :: Int -> IO ()
 countdown 0 = putStrLn $ T.pack "\nTime's up!"

@@ -67,6 +67,7 @@ executable hask-master
         base,
         byline,
         text,
+        containers,
         hask-master
 
     hs-source-dirs:   app
