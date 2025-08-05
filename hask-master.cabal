@@ -52,6 +52,9 @@ common vector
 common vty
   build-depends: vty >=6.1 && <6.3
 
+common vty-crossplatform
+  build-depends: vty-crossplatform >=0.4 && <0.5
+
 common warnings
     ghc-options: -Wall
 
@@ -78,11 +81,12 @@ executable hask-master
     build-depends:
         base,
         brick,
+        containers,
         microlens,
         microlens-th,
         text,
         vty,
-        containers,
+        vty-crossplatform,
         hask-master
 
     hs-source-dirs:   app

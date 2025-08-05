@@ -12,3 +12,4 @@ data Task = Task
     , _time :: Int
     , _timer :: Timer.Timer
     }
+
