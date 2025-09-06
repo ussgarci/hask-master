@@ -11,5 +11,6 @@ data Task = Task
     { _name :: T.Text
     , _time :: Int
     , _timer :: Timer.Timer
+    , _status :: TaskStatus
     }
 

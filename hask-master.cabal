@@ -55,6 +55,9 @@ common vty
 common vty-crossplatform
   build-depends: vty-crossplatform >=0.4 && <0.5
 
+common optparse-applicative
+  build-depends: optparse-applicative >=0.16 && <0.19
+
 common warnings
     ghc-options: -Wall
 
@@ -87,6 +90,7 @@ executable hask-master
         text,
         vty,
         vty-crossplatform,
+        optparse-applicative,
         hask-master
 
     hs-source-dirs:   app
