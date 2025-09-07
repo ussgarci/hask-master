@@ -6,6 +6,7 @@ module Task (
 ) where
 
 import qualified Data.Text as T
+import Data.Aeson (FromJSON, ToJSON)
 import GHC.Generics (Generic)
 import qualified Timer
 
@@ -23,3 +24,9 @@ newtype TaskList = TaskList
     { _tasks :: [Task]
     }
     deriving (Show, Generic)
+
+instance ToJSON Task
+instance FromJSON Task
+
+instance ToJSON TaskList
+instance FromJSON TaskList
