@@ -114,7 +114,9 @@ executable hask-master
     other-modules:
       Task,
       Timer,
-      Commands.Add
+      Command,
+      Commands.Add,
+      Commands.List
 
     hs-source-dirs:   
       app,

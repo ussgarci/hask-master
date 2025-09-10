@@ -5,8 +5,8 @@ module Task (
     TaskList (..),
 ) where
 
-import qualified Data.Text as T
 import Data.Aeson (FromJSON, ToJSON)
+import qualified Data.Text as T
 import GHC.Generics (Generic)
 import qualified Timer
 

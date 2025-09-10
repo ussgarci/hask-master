@@ -1,7 +1,7 @@
 module Commands.Add (
-    AddOptions(..),
+    AddOptions (..),
     addP,
-    runAdd
+    runAdd,
 ) where
 
 import Data.Aeson (decode, encode)
@@ -15,17 +15,19 @@ import System.FilePath ((</>))
 import Task (Task (..), TaskList (..))
 
 data AddOptions = AddOptions
-    { taskName    :: String
+    { taskName :: String
     , taskMinutes :: Int
     }
     deriving (Show)
 
 addP :: Parser AddOptions
-addP = AddOptions
-    <$> strArgument
-        (metavar "<name>" <> help "Name of the task")
-    <*> argument auto
-        (metavar "<minutes>" <> help "Time in minutes for the task")
+addP =
+    AddOptions
+        <$> strArgument
+            (metavar "<name>" <> help "Name of the task")
+        <*> argument
+            auto
+            (metavar "<minutes>" <> help "Time in minutes for the task")
 
 runAdd :: AddOptions -> IO ()
 runAdd opts = do
@@ -38,11 +40,12 @@ runAdd opts = do
     let initialTaskList = TaskList{_tasks = []}
 
     fileExists <- doesFileExist taskFile
-    currentTaskList <- if fileExists
-        then do
-            jsonContent <- BS.readFile taskFile
-            return $ fromMaybe initialTaskList (decode (LBS.fromStrict jsonContent))
-        else return initialTaskList
+    currentTaskList <-
+        if fileExists
+            then do
+                jsonContent <- BS.readFile taskFile
+                return $ fromMaybe initialTaskList (decode (LBS.fromStrict jsonContent))
+            else return initialTaskList
 
     let newTask = Task{_name = T.pack (taskName opts), _minutes = taskMinutes opts}
     let updatedTasks = _tasks currentTaskList ++ [newTask]

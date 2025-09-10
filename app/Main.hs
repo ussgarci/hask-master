@@ -2,6 +2,11 @@
 
 module Main where
 
+import Command (Command (..))
+import Commands.Add (runAdd)
+import qualified Commands.Add as Add
+import Commands.List (runList)
+import qualified Commands.List as List
 import Data.Aeson (FromJSON, ToJSON, decode, encode)
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Maybe
@@ -11,19 +16,12 @@ import System.Directory (createDirectoryIfMissing, doesFileExist, getHomeDirecto
 import System.FilePath ((</>))
 import Task (Task (..), TaskList (..))
 import Text.Read (readMaybe)
-import Commands.Add (AddOptions, runAdd)
-import qualified Commands.Add as Add
-
-data Command
-    = Add AddOptions
-    | List
-    deriving (Show)
 
 addP :: Parser Command
 addP = Add <$> Add.addP
 
 listP :: Parser Command
-listP = pure List
+listP = List.listP
 
 -- combines sub-commands
 commandP :: Parser Command
@@ -48,5 +46,4 @@ main = do
 
 run :: Command -> IO ()
 run (Add opts) = runAdd opts
-run List =
-    putStrLn "NO TASKS YET"
+run List = runList
